@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block content %}
+
+<div class ="container">
+
+
+<form method="POST">
+   <div class="container">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-xs-6">
+							<h2><b>Add</b></h2>
+						</div>
+					</div>
+				</div>
+					<div class="modal-body">
+						{% csrf_token %}
+						{{form.as_p}}
+					</div>
+					<div class="modal-footer">
+						<a href="/manage" class="btn btn-default" role="button">Cancel</a>
+						<input type = "submit" class="btn btn-success" value="Add">
+					</div>
+			</div>
+	</form>
+</div>
+
+{% endblock %}
