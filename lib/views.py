@@ -77,12 +77,16 @@ def import_books(request):
 
                 if len(volume_info['publishedDate']) == 4:
                     date = datetime.date(int(volume_info['publishedDate']), 1, 1)
-                elif len(volume_info['publishedDate']) > 4:
+                elif len(volume_info['publishedDate']) == 7:
+                    year, month = volume_info['publishedDate'].split('-')
+                    date = datetime.date(int(year), int(month), 1)
+                elif len(volume_info['publishedDate']) > 7:
                     year, month, day = volume_info['publishedDate'].split('-')
                     date = datetime.date(int(year), int(month), int(day))
+
                 else:
                     date = None
-                book_found = Books.objects.get(isbn=volume_info.get('industryIdentifiers')[0]['identifier'])
+                book_found = Books.objects.filter(isbn=volume_info.get('industryIdentifiers')[0]['identifier'])
                 if not book_found:
                     book = Books(
                         title=volume_info.get('title'),

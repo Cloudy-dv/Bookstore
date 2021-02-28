@@ -10,7 +10,6 @@ django-filter==2.4.0
 django-heroku==0.3.1
 django-oauth-toolkit==1.4.0
 djangorestframework==3.12.2
-googlebooks==1.0
 idna==2.10
 oauthlib==3.1.0
 psycopg2==2.8.6
@@ -20,3 +19,4 @@ soupsieve==2.2
 sqlparse==0.4.1
 urllib3==1.26.3
 whitenoise==5.2.0
+gunicorn==20.0.4
