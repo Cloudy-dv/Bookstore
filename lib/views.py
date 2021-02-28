@@ -85,7 +85,6 @@ def import_books(request):
                 elif len(volume_info['publishedDate']) > 7:
                     year, month, day = volume_info['publishedDate'].split('-')
                     date = datetime.date(int(year), int(month), int(day))
-
                 else:
                     date = None
 
