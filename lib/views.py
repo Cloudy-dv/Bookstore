@@ -71,11 +71,13 @@ def import_books(request):
         form = BookImport(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            s = search_request(cd)
-            for data in s['items']:
+            search = search_request(cd)
+            for data in search['items']:
                 volume_info = data['volumeInfo']
 
-                if len(volume_info['publishedDate']) == 4:
+                if not volume_info.get('published_date'):
+                    date = None
+                elif len(volume_info['publishedDate']) == 4:
                     date = datetime.date(int(volume_info['publishedDate']), 1, 1)
                 elif len(volume_info['publishedDate']) == 7:
                     year, month = volume_info['publishedDate'].split('-')
@@ -86,13 +88,20 @@ def import_books(request):
 
                 else:
                     date = None
-                book_found = Books.objects.filter(isbn=volume_info.get('industryIdentifiers')[0]['identifier'])
+
+                if volume_info.get('industryIdentifiers'):
+                    book_found = Books.objects.filter(isbn=volume_info.get('industryIdentifiers')[0]['identifier'])
+                    isbn = volume_info.get('industryIdentifiers')[0]['identifier']
+                else:
+                    book_found = None
+                    isbn = None
+
                 if not book_found:
                     book = Books(
                         title=volume_info.get('title'),
                         author=str(volume_info.get('authors')),
                         publication_date=date,
-                        isbn=volume_info.get('industryIdentifiers')[0]['identifier'],
+                        isbn=isbn,
                         pages=volume_info.get('pageCount') or 0,
                         art_cover=volume_info.get('previewLink'),
                         published_lang=volume_info.get('language')
@@ -119,12 +128,8 @@ def search_request(cd):
     key = "&key=AIzaSyCCZjyPr-mG7okp8AQyX0YbbZmjBuNuPUA"
     cd = {x: y for x, y in cd.items() if y}
     text = ""
-    except_key = list(cd.keys())[0]
     for x, y in cd.items():
-        if except_key == x:
-            text += f'{y}'
-        else:
-            text += f'+{x}:{y}'
+        text += f'{x}:{y}+'
     url = search_str + text + key
     req = requests.get(url)
     return req.json()
