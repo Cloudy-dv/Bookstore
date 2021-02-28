@@ -75,7 +75,7 @@ def import_books(request):
             for data in search.get('items', []):
                 volume_info = data['volumeInfo']
 
-                if not volume_info.get('published_date'):
+                if volume_info.get('published_date', None) is None:
                     date = None
                 elif len(volume_info['publishedDate']) == 4:
                     date = datetime.date(int(volume_info['publishedDate']), 1, 1)
