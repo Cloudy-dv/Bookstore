@@ -72,7 +72,7 @@ def import_books(request):
         if form.is_valid():
             cd = form.cleaned_data
             search = search_request(cd)
-            for data in search['items']:
+            for data in search.get('items', []):
                 volume_info = data['volumeInfo']
 
                 if not volume_info.get('published_date'):
