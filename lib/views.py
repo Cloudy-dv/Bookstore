@@ -29,19 +29,12 @@ class Manage(ListView):
     template_name = "manage.html"
     context_object_name = 'books'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
 
 class Add(CreateView):
     model = Books
     template_name = "addbook.html"
     form_class = BookForm
     success_url = '/manage'
-
-    def form_valid(self, form):
-        return super().form_valid(form)
 
 
 class Update(UpdateView):
@@ -116,10 +109,6 @@ class Found(ListView):
     model = Books
     template_name = "found.html"
     context_object_name = 'books'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 def search_request(cd):
