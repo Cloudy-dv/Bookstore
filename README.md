@@ -13,6 +13,6 @@ Project is created with:
 ### Endpoints 
 https://bookstore-stx.herokuapp.com/books/ - allows user to search through their books. <br/><br/>
 https://bookstore-stx.herokuapp.com/manage/ - lists all books in our library and allows to add additional ones <br/><br/>
-https://bookstore-stx.herokuapp.com/import/ - allows user to import new books to theirs library by searching through Google Books API <br/><br/>
+https://bookstore-stx.herokuapp.com/import/ - allows user to import new books to their library by searching through Google Books API <br/><br/>
 https://bookstore-stx.herokuapp.com/api/view - REST API view for our project - By sending GET request to it, it returns JSON format of our books
 
